@@ -1,7 +1,6 @@
 package com.example.tryingoutaqua.base.mywebsite;
 
 import com.example.tryingoutaqua.base.TestBase;
-import helpers.Sleeper;
 import org.junit.jupiter.api.Test;
 
 public class CheckNavigationWorkingTest extends TestBase {
