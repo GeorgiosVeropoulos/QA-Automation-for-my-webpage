@@ -1,10 +1,11 @@
-package testCaseReport;
+package com.example.tryingoutaqua.testCaseReport;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
-import lombok.Setter;
+import com.example.tryingoutaqua.base.TestBase;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Assertions;
@@ -19,9 +20,10 @@ import java.util.List;
 @Slf4j
 public class TestCaseReport {
 
-    private ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
-    @Setter
-    private WebDriver driver;
+    @Getter
+    private final ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
+
+    private final WebDriver driver;
 
     private static List<AssertionError> errors = new ArrayList<>();
 
@@ -29,8 +31,8 @@ public class TestCaseReport {
         this.driver = driver;
     }
 
-    public void setTestName(ExtentReports reports, String name, int ID) {
-        extentTest.set(reports.createTest(ID + ":" + name));
+    public void setTestName(ExtentReports reports, String name) {
+        extentTest.set(reports.createTest(name));
     }
 
     public void logMessage(Status status, String message) {
@@ -95,6 +97,12 @@ public class TestCaseReport {
         }
     }
 
+    public void logScreenShot64(Status status) {
+        synchronized (TestCaseReport.class) {
+            extentTest.get().log(status, MediaEntityBuilder.createScreenCaptureFromBase64String(base64ScreenShot()).build());
+        }
+    }
+
     private String createScreenShot() {
         File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         String fileName = System.currentTimeMillis() + ".png";
@@ -108,6 +116,11 @@ public class TestCaseReport {
         // basically the path will go from-------------------> TO
         // user.dir + target + reports + test + report.html ->  /tryingoutAqua/target/images/THE_IMAGE.PNG
         return Paths.get("../../", "images", fileName).toString();
+    }
+
+    private String base64ScreenShot() {
+        String base64Screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
+        return base64Screenshot;
     }
 
 }
