@@ -19,7 +19,7 @@ public class PropertiesManager extends Properties {
 
 
     public static String getEnvironmentProperty(String property) {
-        return properties.getProperty(property);
+        return properties.getProperty(property, "");
     }
 
 

@@ -50,7 +50,7 @@ public class Browser {
                 options.addArguments("--remote-allow-origins=*");
                 if (Boolean.parseBoolean(PropertiesManager.getEnvironmentProperty("headless"))) {
                     options.addArguments("--no-sandbox");
-                    options.addArguments("--disable-dev-shm-usage");
+//                    options.addArguments("--disable-dev-shm-usage");
                     options.addArguments("--headless=new");
                 }
 
