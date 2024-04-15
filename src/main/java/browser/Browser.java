@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import static constants.TestConstants.DEFAULT_WAIT;
@@ -49,8 +51,12 @@ public class Browser {
                 if (Boolean.parseBoolean(PropertiesManager.getEnvironmentProperty("headless"))) {
                     options.addArguments("--no-sandbox");
                     options.addArguments("--disable-dev-shm-usage");
-                    options.addArguments("--headless");
+                    options.addArguments("--headless=new");
                 }
+
+                Map<String, Object> prefs = new HashMap<>();
+                prefs.put("plugins.plugins_disabled", new String[]{"Chrome PDF Viewer"});
+                options.setExperimentalOption("prefs", prefs);
                 driverThreadLocal.set(new ChromeDriver(options));
                 log.info("Browser to be used was CHROME!");
             }
