@@ -47,6 +47,8 @@ public class Browser {
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("--remote-allow-origins=*");
                 if (Boolean.parseBoolean(PropertiesManager.getEnvironmentProperty("headless"))) {
+                    options.addArguments("--no-sandbox");
+                    options.addArguments("--disable-dev-shm-usage");
                     options.addArguments("--headless");
                 }
                 driverThreadLocal.set(new ChromeDriver(options));
