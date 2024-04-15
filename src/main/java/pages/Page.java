@@ -5,11 +5,14 @@ import constants.TestConstants;
 import helpers.Sleeper;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import testCaseReport.TestCaseReport;
 
 import java.time.Duration;
+
+import static constants.TestConstants.DEFAULT_WAIT;
 
 /** Page class for other pages to extend from.
  *  Constructor needs both the active driver and testCaseReport in order to log everything.
@@ -26,6 +29,7 @@ public class Page {
     public Page(WebDriver driver, TestCaseReport testCaseReport) {
         this.driver = driver;
         this.testCaseReport = testCaseReport;
+        PageFactory.initElements(driver, this);
     }
 
 
@@ -47,18 +51,18 @@ public class Page {
         long currentTime = System.currentTimeMillis();
         FluentWait<WebDriver> fluentWait = new FluentWait<>(driver);
         try {
-            fluentWait.withTimeout(Duration.ofMillis(TestConstants.TEN_SECONDS))
+            fluentWait.withTimeout(Duration.ofMillis(DEFAULT_WAIT))
                     .pollingEvery(Duration.ofMillis(500L))
                     .ignoring(StaleElementReferenceException.class)
                     .ignoring(NullPointerException.class)
                     .ignoring(NoSuchElementException.class)
                     .until(ExpectedConditions.elementToBeClickable(element));
         } catch (TimeoutException timeoutException) {
-            testCaseReport.logMessage(Status.INFO, element + " wasn't clickable after 10 seconds");
+            testCaseReport.logMessage(Status.INFO, element + " wasn't clickable after 30 seconds");
         }
         long endTime = System.currentTimeMillis();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(TestConstants.TEN_SECONDS));
-        return endTime - currentTime <= TestConstants.TEN_SECONDS;
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(DEFAULT_WAIT));
+        return endTime - currentTime <= DEFAULT_WAIT;
     }
 
     public boolean waitForElementVisibility(WebElement element) {
@@ -66,18 +70,18 @@ public class Page {
         long currentTime = System.currentTimeMillis();
         FluentWait<WebDriver> fluentWait = new FluentWait<>(driver);
         try {
-            fluentWait.withTimeout(Duration.ofMillis(TestConstants.TEN_SECONDS))
+            fluentWait.withTimeout(Duration.ofMillis(DEFAULT_WAIT))
                     .pollingEvery(Duration.ofMillis(500L))
                     .ignoring(StaleElementReferenceException.class)
                     .ignoring(NullPointerException.class)
                     .ignoring(NoSuchElementException.class)
                     .until(ExpectedConditions.visibilityOf(element));
         } catch (TimeoutException timeoutException) {
-            testCaseReport.logMessage(Status.INFO, element + " wasn't visible after 10 seconds");
+            testCaseReport.logMessage(Status.INFO, element + " wasn't visible after 30 seconds");
         }
         long endTime = System.currentTimeMillis();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(TestConstants.TEN_SECONDS));
-        return endTime - currentTime <= TestConstants.TEN_SECONDS;
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(DEFAULT_WAIT));
+        return endTime - currentTime <= DEFAULT_WAIT;
     }
 
 

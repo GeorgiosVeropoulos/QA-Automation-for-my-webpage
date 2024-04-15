@@ -17,6 +17,6 @@ public class Sleeper {
         } catch (InterruptedException e) {
             log.info(e.getMessage());
         }
-        log.info("slept for " + duration + " in milliSeconds");
+        log.info("slept for {} in milliSeconds", duration);
     }
 }

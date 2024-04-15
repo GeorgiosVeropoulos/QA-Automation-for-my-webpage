@@ -4,7 +4,6 @@ import com.aventstack.extentreports.Status;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import testCaseReport.TestCaseReport;
 
 public class MainPage extends Page {
@@ -26,7 +25,6 @@ public class MainPage extends Page {
 
     public MainPage(WebDriver driver, TestCaseReport testCaseReport) {
         super(driver, testCaseReport);
-        PageFactory.initElements(driver, this);
     }
 
     public MainPage checkTitleIsVisible(boolean isVisible) {

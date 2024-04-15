@@ -1,16 +1,13 @@
-package com.example.tryingoutaqua;
+package com.example.tryingoutaqua.base.saucedemo;
 
 import Listeners.TestInfo;
 import com.example.tryingoutaqua.base.TestBase;
-import constants.TestConstants;
+import com.example.tryingoutaqua.base.mywebsite.MyWebSiteBase;
 import helpers.Sleeper;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
-import org.junit.jupiter.api.Test;
 
-import javax.annotation.concurrent.ThreadSafe;
-
-public class SauceDemoTest extends TestBase {
+public class SauceDemoTest extends MyWebSiteBase {
 
 
 

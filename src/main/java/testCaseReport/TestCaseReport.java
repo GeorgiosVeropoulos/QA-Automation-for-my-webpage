@@ -1,11 +1,11 @@
-package com.example.tryingoutaqua.testCaseReport;
+package testCaseReport;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
-import com.example.tryingoutaqua.base.TestBase;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Assertions;
@@ -21,7 +21,7 @@ import java.util.List;
 public class TestCaseReport {
 
     @Getter
-    private final ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
+    private static ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
 
     private final WebDriver driver;
 
@@ -31,7 +31,12 @@ public class TestCaseReport {
         this.driver = driver;
     }
 
-    public void setTestName(ExtentReports reports, String name) {
+    /**
+     * <b>Don't call this method it is used inside the TestListener</b>
+     * @param reports the extentReport to be given.
+     * @param name the name of the Test.
+     */
+    public static void setTestName(ExtentReports reports, String name) {
         extentTest.set(reports.createTest(name));
     }
 

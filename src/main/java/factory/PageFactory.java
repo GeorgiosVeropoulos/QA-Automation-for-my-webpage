@@ -11,6 +11,5 @@ public class PageFactory {
 
     public PageFactory(WebDriver driver, TestCaseReport testCaseReport) {
         mainPage = new MainPage(driver, testCaseReport);
-
     }
 }
