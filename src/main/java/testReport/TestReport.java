@@ -1,11 +1,10 @@
-package testCaseReport;
+package testReport;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Assertions;
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-public class TestCaseReport {
+public class TestReport {
 
     @Getter
     private static ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
@@ -27,7 +26,7 @@ public class TestCaseReport {
 
     private static List<AssertionError> errors = new ArrayList<>();
 
-    public TestCaseReport(WebDriver driver) {
+    public TestReport(WebDriver driver) {
         this.driver = driver;
     }
 
@@ -97,13 +96,13 @@ public class TestCaseReport {
     }
 
     public void logScreenShot(Status status) {
-        synchronized (TestCaseReport.class) {
+        synchronized (TestReport.class) {
             extentTest.get().log(status, MediaEntityBuilder.createScreenCaptureFromPath(createScreenShot()).build());
         }
     }
 
     public void logScreenShot64(Status status) {
-        synchronized (TestCaseReport.class) {
+        synchronized (TestReport.class) {
             extentTest.get().log(status, MediaEntityBuilder.createScreenCaptureFromBase64String(base64ScreenShot()).build());
         }
     }

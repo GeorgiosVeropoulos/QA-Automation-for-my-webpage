@@ -11,13 +11,11 @@ import helpers.PropertiesManager;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.extension.ExecutionCondition;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.openqa.selenium.WebDriver;
-import testCaseReport.TestCaseReport;
-import factory.PageFactory;
+import testReport.TestReport;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -32,7 +30,7 @@ public abstract class TestBase {
     @Getter
     private WebDriver driver;
     @Getter
-    private TestCaseReport testCaseReport;
+    private TestReport testReport;
 
 
     // Test report
@@ -65,7 +63,7 @@ public abstract class TestBase {
         browser = new Browser();
         driver = browser.getDriver();
         driver.get(TestConstants.URL);
-        testCaseReport = new TestCaseReport(driver);
+        testReport = new TestReport(driver);
     }
 
 
@@ -73,14 +71,14 @@ public abstract class TestBase {
     public void closeDriver() {
         testStep("After step : Close driver");
 //        testCaseReport.logScreenShot(Status.INFO);
-        testCaseReport.logScreenShot64(Status.INFO);
-        TestCaseReport.assertAllAndFlushReport(reportRef.get(), getDriver());
+        testReport.logScreenShot64(Status.INFO);
+        TestReport.assertAllAndFlushReport(reportRef.get(), getDriver());
         browser.removeDriver();
     }
 
 
     public void testStep(String message) {
-        testCaseReport.logTestStep("<b><font size='3'>" + message + "</font></b>");
+        testReport.logTestStep("<b><font size='3'>" + message + "</font></b>");
         log.info(message);
     }
 

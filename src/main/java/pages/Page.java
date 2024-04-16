@@ -8,7 +8,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
-import testCaseReport.TestCaseReport;
+import testReport.TestReport;
 
 import java.time.Duration;
 
@@ -19,16 +19,15 @@ import static constants.TestConstants.DEFAULT_WAIT;
  *  Contains methods for basic functionality in automation.
  *
  */
-
 public class Page {
 
-    public TestCaseReport testCaseReport;
+    public TestReport testReport;
     public WebDriver driver;
 
 
-    public Page(WebDriver driver, TestCaseReport testCaseReport) {
+    public Page(WebDriver driver, TestReport testReport) {
         this.driver = driver;
-        this.testCaseReport = testCaseReport;
+        this.testReport = testReport;
         PageFactory.initElements(driver, this);
     }
 
@@ -36,7 +35,7 @@ public class Page {
     public void click(WebElement element) {
         waitForElementClickable(element);
         element.click();
-        testCaseReport.logMessage(Status.INFO, "element clicked " + getByFromElement(element));
+        testReport.logMessage(Status.INFO, "element clicked " + getByFromElement(element));
     }
 
     public void scrollToElement(WebElement element) {
@@ -58,7 +57,7 @@ public class Page {
                     .ignoring(NoSuchElementException.class)
                     .until(ExpectedConditions.elementToBeClickable(element));
         } catch (TimeoutException timeoutException) {
-            testCaseReport.logMessage(Status.INFO, element + " wasn't clickable after 30 seconds");
+            testReport.logMessage(Status.INFO, element + " wasn't clickable after 30 seconds");
         }
         long endTime = System.currentTimeMillis();
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(DEFAULT_WAIT));
@@ -77,7 +76,7 @@ public class Page {
                     .ignoring(NoSuchElementException.class)
                     .until(ExpectedConditions.visibilityOf(element));
         } catch (TimeoutException timeoutException) {
-            testCaseReport.logMessage(Status.INFO, element + " wasn't visible after 30 seconds");
+            testReport.logMessage(Status.INFO, element + " wasn't visible after 30 seconds");
         }
         long endTime = System.currentTimeMillis();
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(DEFAULT_WAIT));
@@ -131,7 +130,7 @@ public class Page {
             Sleeper.sleepInMillis(TestConstants.HALF_SECOND);
             long currentScrollPos = (Long) ((JavascriptExecutor) driver).executeScript("return window.scrollY;");
             if (currentScrollPos == initialScrollPos) {
-                testCaseReport.logMessage(Status.INFO, "scrolling was done!");
+                testReport.logMessage(Status.INFO, "scrolling was done!");
                 break;
             }
             initialScrollPos = currentScrollPos;

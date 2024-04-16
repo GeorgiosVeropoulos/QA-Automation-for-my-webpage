@@ -1,11 +1,10 @@
 package com.example.tryingoutaqua.listeners;
 
 import Listeners.TestInfo;
-import com.aventstack.extentreports.ExtentTest;
 import com.example.tryingoutaqua.base.TestBase;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.extension.AfterAllCallback;
-import testCaseReport.TestCaseReport;
+import testReport.TestReport;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
@@ -26,7 +25,7 @@ public class TestListener implements BeforeEachCallback, AfterAllCallback {
         // Store the test method name for later use
         // the idea is to add here code for Tuskr, Testrail etc.
         context.getStore(ExtensionContext.Namespace.GLOBAL).put("testMethodName", testMethodName);
-        TestCaseReport.setTestName(TestBase.getReportRef().get(), testInfo.id() + " : " + testMethodName);
+        TestReport.setTestName(TestBase.getReportRef().get(), testInfo.id() + " : " + testMethodName);
     }
 
     @Override

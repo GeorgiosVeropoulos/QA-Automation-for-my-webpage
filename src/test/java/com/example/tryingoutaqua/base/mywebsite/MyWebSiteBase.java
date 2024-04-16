@@ -11,6 +11,6 @@ public class MyWebSiteBase extends TestBase {
     public PageFactory pages;
 
     public MyWebSiteBase() {
-        pages = new PageFactory(getDriver(), getTestCaseReport());
+        pages = new PageFactory(getDriver(), getTestReport());
     }
 }

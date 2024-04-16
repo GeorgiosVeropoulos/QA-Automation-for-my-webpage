@@ -4,7 +4,7 @@ import com.aventstack.extentreports.Status;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import testCaseReport.TestCaseReport;
+import testReport.TestReport;
 
 public class MainPage extends Page {
 
@@ -23,18 +23,18 @@ public class MainPage extends Page {
     @FindBy(id = "info")
     public WebElement infoBtn;
 
-    public MainPage(WebDriver driver, TestCaseReport testCaseReport) {
-        super(driver, testCaseReport);
+    public MainPage(WebDriver driver, TestReport testReport) {
+        super(driver, testReport);
     }
 
     public MainPage checkTitleIsVisible(boolean isVisible) {
-        testCaseReport.assertEquals(isVisible, waitForElementVisibility(mainTitle), "main title is displayed");
+        testReport.assertEquals(isVisible, waitForElementVisibility(mainTitle), "main title is displayed");
         return this;
     }
 
     public MainPage checkTitleTxt(String text) {
         waitForElementVisibility(mainTitle);
-        testCaseReport.assertEquals(text, mainTitle.getText(), "main title has same Text");
+        testReport.assertEquals(text, mainTitle.getText(), "main title has same Text");
         return this;
     }
 
@@ -61,34 +61,34 @@ public class MainPage extends Page {
     }
 
     public MainPage checkAboutMeBtnAfterClickIsActive(boolean isActive) {
-        testCaseReport.assertEquals(isActive, aboutMeBtn.getAttribute("class").contains("active"),
+        testReport.assertEquals(isActive, aboutMeBtn.getAttribute("class").contains("active"),
                 "about me btn is active");
         checkScrollIsDone();
-        testCaseReport.logScreenShot(Status.INFO);
+        testReport.logScreenShot(Status.INFO);
         return this;
     }
 
     public MainPage checkMyWorkBtnAfterClickIsActive(boolean isActive) {
-        testCaseReport.assertEquals(isActive, myWorkBtn.getAttribute("class").contains("active"),
+        testReport.assertEquals(isActive, myWorkBtn.getAttribute("class").contains("active"),
                 "My Work btn is active");
         checkScrollIsDone();
-        testCaseReport.logScreenShot(Status.INFO);
+        testReport.logScreenShot(Status.INFO);
         return this;
     }
 
     public MainPage checkWorkedAtBtnAfterClickIsActive(boolean isActive) {
-        testCaseReport.assertEquals(isActive, workedAtBtn.getAttribute("class").contains("active"),
+        testReport.assertEquals(isActive, workedAtBtn.getAttribute("class").contains("active"),
                 "Worked At btn is active");
         checkScrollIsDone();
-        testCaseReport.logScreenShot(Status.INFO);
+        testReport.logScreenShot(Status.INFO);
         return this;
     }
 
     public MainPage checkInfoBtnAfterClickIsActive(boolean isActive) {
-        testCaseReport.assertEquals(isActive, infoBtn.getAttribute("class").contains("active"),
+        testReport.assertEquals(isActive, infoBtn.getAttribute("class").contains("active"),
                 "info btn is active");
         checkScrollIsDone();
-        testCaseReport.logScreenShot(Status.INFO);
+        testReport.logScreenShot(Status.INFO);
 
 
         return this;
