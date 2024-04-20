@@ -15,10 +15,8 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
-
+  common-setup:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 17
@@ -30,20 +28,33 @@ jobs:
     - uses: browser-actions/setup-chrome@latest
     - run: chrome --version
 
+  build:
+    needs: common-setup
+    runs-on: ubuntu-latest
+    steps:
     - name: Build with Maven
       run: mvn --batch-mode -DskipTests package
+
+  test:
+    needs: common-setup
+    runs-on: ubuntu-latest
+    steps:
     - name: Test
       run: mvn --batch-mode test -Dmaven.test.failure.ignore=true -Dproperty=RunRemote.properties -DgroupToRun=all -Dthreads=4 -DreportName=report
 
-      #Test report generation 
-    - name: Test Report
-      uses: dorny/test-reporter@v1.9.0       # repo used to build report!
-      if: success() || failure()             # run this step even if previous step failed
+  publish-report:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Publish Test Report
+      uses: dorny/test-reporter@v1.9.0
+      if: always() # You want to publish the report regardless of the test result
       with:
-        name: Automation Test                # Name of the check run which will be created
-        path: target/surefire-reports/*.xml  # Path to test results
-        reporter: java-junit                 # Format of test results
+        name: Automation Test
+        path: target/surefire-reports/*.xml
+        reporter: java-junit
         fail-on-error: true
+
         
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     # - name: Update dependency graph
