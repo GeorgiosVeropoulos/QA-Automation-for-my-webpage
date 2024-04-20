@@ -62,10 +62,13 @@ jobs:
         run: java -version
 
       - name: Set Java 17 for Maven
-        run: mvn -N io.takari:maven:wrapper -Dmaven=3.8.8
+        run: |
+          ./mvnw -N io.takari:maven:wrapper -Dmaven=3.8.8
+          ./mvnw -version
 
       - name: Build with Maven
-        run: ./mvnw --batch-mode -DskipTests package
+        run: ./mvnw --batch-mode -DskipTests package -Dmaven.compiler.release=17
+
 
 
 
