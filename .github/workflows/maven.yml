@@ -35,15 +35,43 @@ jobs:
     - name: Test
       run: mvn --batch-mode test -Dmaven.test.failure.ignore=true -Dproperty=RunRemote.properties -DgroupToRun=all -Dthreads=4 -DreportName=report
 
-      #Test report generation 
-    - name: Test Report
-      uses: dorny/test-reporter@v1.9.0       # repo used to build report!
-      if: success() || failure()             # run this step even if previous step failed
+  generate-report:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
       with:
-        name: Automation Test                # Name of the check run which will be created
-        path: target/surefire-reports/*.xml  # Path to test results
-        reporter: java-junit                 # Format of test results
+        java-version: 17
+    - name: Generate Test Report
+      run: mvn surefire-report:report-only
+    - name: Upload Test Report
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-reports
+        path: target/site/surefire-report
+
+  run-test-reporter:
+    needs: [generate-report]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        java-version: 17
+    - name: Test Report
+      uses: dorny/test-reporter@v1.9.0
+      if: always()
+      with:
+        name: Automation Test
+        path: target/surefire-reports/*.xml
+        reporter: java-junit
         fail-on-error: true
+
 
 
         
