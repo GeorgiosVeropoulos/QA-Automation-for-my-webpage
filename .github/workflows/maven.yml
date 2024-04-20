@@ -18,92 +18,47 @@ jobs:
   common-setup:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Cache Maven dependencies
-      uses: actions/cache@v2
-      with:
-        path: ~/.m2/repository
-        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-        restore-keys: |
-          ${{ runner.os }}-maven-
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'temurin'
+      - name: Set up Chrome
+        uses: browser-actions/setup-chrome@latest
 
-    - uses: browser-actions/setup-chrome@latest
-    - run: chrome --version
+      - name: Print current directory
+        run: pwd
 
-    # List all files in the current directory
-    - name: List files in the current directory
-      run: ls -l
+      - name: List files in the current directory
+        run: ls -l
 
   build:
     needs: common-setup
     runs-on: ubuntu-latest
     steps:
-    # Change to the repository root directory
-    - name: Change to repository root directory
-      run: cd $GITHUB_WORKSPACE
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    # List files in the current directory
-    - name: List files in the current directory
-      run: ls -l
+      - name: Change to repository root directory
+        run: cd $GITHUB_WORKSPACE
 
-    # Copy necessary files for build
-    - name: Copy necessary files for build
-      run: cp -r * QA-Automation-for-my-webpage/QA-Automation-for-my-webpage/
+      - name: List files in the current directory
+        run: ls -l
 
-    # Build with Maven
-    - name: Build with Maven
-      run: cd QA-Automation-for-my-webpage/QA-Automation-for-my-webpage && mvn --batch-mode -DskipTests package
+      - name: Print current directory
+        run: pwd
 
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-    # Change to the repository root directory
-    - name: Change to repository root directory
-      run: cd $GITHUB_WORKSPACE
+      - name: Copy necessary files for build
+        run: cp -r * QA-Automation-for-my-webpage/QA-Automation-for-my-webpage/
 
-    # List files in the current directory
-    - name: List files in the current directory
-      run: ls -l
+      - name: List files in target directory
+        run: ls -l QA-Automation-for-my-webpage/QA-Automation-for-my-webpage/
 
-    # Copy necessary files for test
-    - name: Copy necessary files for test
-      run: cp -r * QA-Automation-for-my-webpage/QA-Automation-for-my-webpage/
-
-    - name: Test
-      run: cd QA-Automation-for-my-webpage/QA-Automation-for-my-webpage && mvn --batch-mode test -Dmaven.test.failure.ignore=true -Dproperty=RunRemote.properties -DgroupToRun=all -Dthreads=4 -DreportName=report
-
-  publish-report:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-    # Change to the repository root directory
-    - name: Change to repository root directory
-      run: cd $GITHUB_WORKSPACE
-
-    # List files in the current directory
-    - name: List files in the current directory
-      run: ls -l
-
-    # Copy necessary files for report
-    - name: Copy necessary files for report
-      run: cp -r * QA-Automation-for-my-webpage/QA-Automation-for-my-webpage/
-
-    - name: Publish Test Report
-      uses: dorny/test-reporter@v1.9.0
-      if: always() # You want to publish the report regardless of the test result
-      with:
-        name: Automation Test
-        path: QA-Automation-for-my-webpage/QA-Automation-for-my-webpage/target/surefire-reports/*.xml
-        reporter: java-junit
-        fail-on-error: true
 
         
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
