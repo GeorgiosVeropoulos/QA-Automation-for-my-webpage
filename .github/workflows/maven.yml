@@ -35,7 +35,7 @@ jobs:
     - name: Test
       run: mvn --batch-mode test -Dmaven.test.failure.ignore=true -Dproperty=RunRemote.properties -DgroupToRun=all -Dthreads=4 -DreportName=report
     - name: Report
-            uses: dorny/test-reporter@v1
+            uses: dorny/test-reporter@v1.9.0
             if: always()
             with:
               name: Maven Tests
