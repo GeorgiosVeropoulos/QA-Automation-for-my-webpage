@@ -27,8 +27,9 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-      - name: Set JAVA_HOME
-        run: echo "JAVA_HOME=$(which java)" >> $GITHUB_ENV
+
+      - name: Set JAVA_HOME for Maven
+        run: echo "export JAVA_HOME=${JAVA_HOME}" >> $GITHUB_ENV
 
       - name: Set up Chrome
         uses: browser-actions/setup-chrome@latest
@@ -60,6 +61,7 @@ jobs:
       
       - name: Build with Maven
         run: mvn --batch-mode -DskipTests package
+
 
 
 
