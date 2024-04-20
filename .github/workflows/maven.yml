@@ -37,10 +37,17 @@ jobs:
     - uses: browser-actions/setup-chrome@latest
     - run: chrome --version
 
+    # List all files in the current directory
+    - name: List files in the current directory
+      run: ls -l
+
   build:
     needs: common-setup
     runs-on: ubuntu-latest
     steps:
+    - name: List files in the current directory
+      run: ls -l
+
     - name: Build with Maven
       run: mvn --batch-mode -DskipTests -f QA-Automation-for-my-webpage/QA-Automation-for-my-webpage/pom.xml package
 
@@ -63,6 +70,7 @@ jobs:
         path: QA-Automation-for-my-webpage/QA-Automation-for-my-webpage/target/surefire-reports/*.xml
         reporter: java-junit
         fail-on-error: true
+
 
 
 
