@@ -64,15 +64,11 @@ jobs:
       - name: Set Java 17 for Maven
         run: |
           ./mvnw -N io.takari:maven:wrapper -Dmaven=3.8.8
+          chmod +x mvnw
           ./mvnw -version
 
       - name: Build with Maven
         run: ./mvnw --batch-mode -DskipTests package -Dmaven.compiler.release=17
-
-
-
-
-
 
 
 
