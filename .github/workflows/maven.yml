@@ -19,9 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v4.1.1
     - name: Set up JDK 17 and Maven
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4.2.1
       with:
         java-version: '17'
         distribution: 'temurin'
@@ -36,9 +36,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v4.1.1
     - name: Use JDK 17 from build job
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4.2.1
       with:
         java-version: '17'
         distribution: 'temurin'
