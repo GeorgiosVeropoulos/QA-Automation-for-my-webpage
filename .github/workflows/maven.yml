@@ -27,6 +27,8 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
+      - name: Set JAVA_HOME
+        run: echo "JAVA_HOME=$(which java)" >> $GITHUB_ENV
 
       - name: Set up Chrome
         uses: browser-actions/setup-chrome@latest
