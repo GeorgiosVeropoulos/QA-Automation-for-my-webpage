@@ -36,11 +36,11 @@ jobs:
       run: mvn --batch-mode test -Dmaven.test.failure.ignore=true -Dproperty=RunRemote.properties -DgroupToRun=all -Dthreads=4 -DreportName=report
     - name: Report
       uses: dorny/test-reporter@v1.9.0
-        if: always()
+        if: success() || failure()    # run this step even if previous step failed
         with:
-          name: Maven Tests
-          path: target/surefire-reports/*.xml
-          reporter: java-junit
+          name: Automation Test            # Name of the check run which will be created
+          path: reports/jest-*.xml    # Path to test results
+          reporter: jest-junit        # Format of test results
           fail-on-error: true
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     # - name: Update dependency graph
