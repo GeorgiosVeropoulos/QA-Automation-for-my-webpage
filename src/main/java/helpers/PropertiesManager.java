@@ -1,6 +1,6 @@
 package helpers;
 
-import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -8,9 +8,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 
+@Slf4j
 public class PropertiesManager extends Properties {
 
-    private static Properties properties;
+    private static volatile Properties properties;
+    private static final Object lock = new Object();
 
     public PropertiesManager() {
         Path path = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "env", System.getProperty("property"));
@@ -24,25 +26,27 @@ public class PropertiesManager extends Properties {
 
 
     private static void loadProperties(Path path) {
-        properties = new Properties();
-        try (FileInputStream inputStream = new FileInputStream(path.toString())) {
-            properties.load(inputStream);
-            properties.forEach((key, value) -> System.setProperty(key.toString(), value.toString()));
+        synchronized (lock) {
+            if (properties != null) {
+                return;
+            }
+            log.info("Starting to load properties!");
+            properties = new Properties();
+            try (FileInputStream inputStream = new FileInputStream(path.toString())) {
+                properties.load(inputStream);
+                properties.forEach((key, value) -> System.setProperty(key.toString(), value.toString()));
 
-            // Print the properties
-            String databaseUrl = properties.getProperty("url");
-            String username = properties.getProperty("username");
-            String password = properties.getProperty("password");
-            System.out.println("Database URL: " + databaseUrl);
-            System.out.println("Username: " + username);
-            System.out.println("Password: " + password);
-
-//            String value = System.getProperty("junit.jupiter.execution.parallel.enabled");
-//            if (value != null) {
-//                System.setProperty("junit.jupiter.execution.parallel.enabled", value);
-//            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+                // Print the properties
+                String databaseUrl = properties.getProperty("url");
+                String username = properties.getProperty("username");
+                String password = properties.getProperty("password");
+                System.out.println("Database URL: " + databaseUrl);
+                System.out.println("Username: " + username);
+                System.out.println("Password: " + password);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
+
     }
 }

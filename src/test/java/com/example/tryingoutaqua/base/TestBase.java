@@ -7,7 +7,6 @@ import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 import com.example.tryingoutaqua.listeners.TestListener;
 import constants.TestConstants;
-import helpers.PropertiesManager;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
@@ -26,7 +25,7 @@ import java.util.concurrent.atomic.AtomicReference;
 @ExtendWith(TestListener.class)
 @Execution(ExecutionMode.CONCURRENT) //this is only added if you want to run in parallel using the JUnit configuration instead of through Maven. add this in the VM Options -Djunit.jupiter.execution.parallel.enabled=true
 public abstract class TestBase {
-    private Browser browser;
+    private final Browser browser;
     @Getter
     private WebDriver driver;
     @Getter
@@ -58,12 +57,12 @@ public abstract class TestBase {
 
     //TODO move these into the TestListener instead of setting them up here!
     public TestBase() {
-        new PropertiesManager();
         initReport();
         browser = new Browser();
         driver = browser.getDriver();
         driver.get(TestConstants.URL);
         testReport = new TestReport(driver);
+
     }
 
 

@@ -17,7 +17,6 @@ import static constants.TestConstants.DEFAULT_WAIT;
 /** Page class for other pages to extend from.
  *  Constructor needs both the active driver and testCaseReport in order to log everything.
  *  Contains methods for basic functionality in automation.
- *
  */
 public class Page {
 

@@ -1,16 +1,14 @@
 package com.example.tryingoutaqua.base.mywebsite;
 
 import Listeners.TestInfo;
-import com.example.tryingoutaqua.base.TestBase;
 import helpers.Sleeper;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
-import org.junit.jupiter.api.Test;
 
 public class CheckNavigationWorkingTest extends MyWebSiteBase {
 
 
-    @TestInfo(name = "check Navigation working", id = 5)
+    @TestInfo(name = "check Navigation working", id = 4)
     @Tags({@Tag("all"), @Tag("myPage")})
     public void checkNavigationWorkingTest() {
 
