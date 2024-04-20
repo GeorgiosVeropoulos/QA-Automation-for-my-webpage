@@ -43,21 +43,14 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: 'maven'
-    - name: Generate SureFire Report
-      run: mvn surefire-report:report-only
-    - name: Upload SureFire Report
-      uses: actions/upload-artifact@v2
-      with:
-        name: test-reports
-        path: target/site/surefire-report
-    - name: Test
+    - name: Running SureFire Tests
       run: mvn --batch-mode test -Dmaven.test.failure.ignore=true -Dproperty=RunRemote.properties -DgroupToRun=all -Dthreads=4 -DreportName=report
 
-    - name: Test Report
+    - name: Generating Test Report
       uses: dorny/test-reporter@v1.9.0
       if: always()
       with:
-        name: Automation Test
+        name: Test Result(s)
         path: target/surefire-reports/*.xml
         reporter: java-junit
         fail-on-error: true
