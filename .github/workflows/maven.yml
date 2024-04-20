@@ -42,14 +42,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Build with Maven
-      run: mvn --batch-mode -DskipTests -f QA-Automation-for-my-webpage/QA-Automation-for-my-webpage/pom.xml package
+      run: mvn --batch-mode -DskipTests package
 
   test:
     needs: build
     runs-on: ubuntu-latest
     steps:
     - name: Test
-      run: mvn --batch-mode test -Dmaven.test.failure.ignore=true -f QA-Automation-for-my-webpage/QA-Automation-for-my-webpage/pom.xml -Dproperty=RunRemote.properties -DgroupToRun=all -Dthreads=4 -DreportName=report
+      run: mvn --batch-mode test -Dmaven.test.failure.ignore=true -Dproperty=RunRemote.properties -DgroupToRun=all -Dthreads=4 -DreportName=report
 
   publish-report:
     needs: test
@@ -60,7 +60,7 @@ jobs:
       if: always() # You want to publish the report regardless of the test result
       with:
         name: Automation Test
-        path: QA-Automation-for-my-webpage/QA-Automation-for-my-webpage/target/surefire-reports/*.xml
+        path: target/surefire-reports/*.xml
         reporter: java-junit
         fail-on-error: true
 
