@@ -54,10 +54,11 @@ jobs:
         run: pwd
 
       - name: Copy necessary files for build
-        run: cp -r * QA-Automation-for-my-webpage/QA-Automation-for-my-webpage/
+        run: cp -r * QA-Automation-for-my-webpage/
 
       - name: List files in target directory
-        run: ls -l QA-Automation-for-my-webpage/QA-Automation-for-my-webpage/
+        run: ls -l QA-Automation-for-my-webpage/
+
 
 
         
