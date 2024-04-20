@@ -52,12 +52,11 @@ jobs:
 
       - name: Print current directory
         run: pwd
-
-      - name: Copy necessary files for build
-        run: cp -r * QA-Automation-for-my-webpage/
-
+        
       - name: List files in target directory
         run: ls -l QA-Automation-for-my-webpage/
+      - name: Build with Maven
+        run: mvn --batch-mode -DskipTests package
 
 
 
