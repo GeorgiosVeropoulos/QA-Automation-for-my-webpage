@@ -54,6 +54,9 @@ jobs:
 
       - name: Print current directory
         run: pwd
+
+      - name: Print Java version
+        run: mvn --version
       
       - name: Build with Maven
         run: mvn --batch-mode -DskipTests package
