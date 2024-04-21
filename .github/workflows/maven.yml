@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Java CI with Maven
+name: Smoke testing workflow
 
 on:
   push:
@@ -14,7 +14,7 @@ on:
   pull_request:
     branches: [ "master" ]
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 0 * * *' #run everyday at 12.
 
 jobs:
   build:
