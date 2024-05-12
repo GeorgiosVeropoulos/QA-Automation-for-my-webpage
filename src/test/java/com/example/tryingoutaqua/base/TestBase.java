@@ -1,11 +1,7 @@
 package com.example.tryingoutaqua.base;
 
 import browser.Browser;
-import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.Status;
-import com.aventstack.extentreports.reporter.ExtentReporter;
-import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-import com.aventstack.extentreports.reporter.configuration.Theme;
 import com.example.tryingoutaqua.listeners.TestListener;
 import constants.TestConstants;
 import lombok.Getter;

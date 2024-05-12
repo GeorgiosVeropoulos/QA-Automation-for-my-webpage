@@ -7,21 +7,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
-
 import static constants.TestConstants.DEFAULT_WAIT;
 
 
 //Creates the necessary driver currently only supports Chrome.
-
 @Slf4j
 public class Browser {
     private static final ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
@@ -92,34 +84,6 @@ public class Browser {
         FIREFOX
     }
 
-
-
-
-
-    //TODO MOVE THIS OUT OF BROWSER
-//    private Properties loadProperties(Path path) {
-//        Properties properties = new Properties();
-//        try (FileInputStream inputStream = new FileInputStream(path.toString())) {
-//            properties.load(inputStream);
-//            properties.forEach((key, value) -> System.setProperty(key.toString(), value.toString()));
-//
-//            // Print the properties
-//            String databaseUrl = properties.getProperty("url");
-//            String username = properties.getProperty("username");
-//            String password = properties.getProperty("password");
-//            System.out.println("Database URL: " + databaseUrl);
-//            System.out.println("Username: " + username);
-//            System.out.println("Password: " + password);
-//
-//            String value = System.getProperty("junit.jupiter.execution.parallel.enabled");
-//            if (value != null) {
-//                System.setProperty("junit.jupiter.execution.parallel.enabled", value);
-//            }
-//            return properties;
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
 
     public WebDriver getDriver() {
         return driverThreadLocal.get();

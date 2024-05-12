@@ -28,7 +28,7 @@ public class TestListener implements BeforeEachCallback, AfterAllCallback, Befor
 
 
     @Override
-    public void beforeAll(ExtensionContext context) throws Exception {
+    public void beforeAll(ExtensionContext context) {
         testsRun = new HashMap<>();
         new PropertiesManager();
 
@@ -71,11 +71,11 @@ public class TestListener implements BeforeEachCallback, AfterAllCallback, Befor
     }
 
     @Override
-    public void afterEach(ExtensionContext context) throws Exception {
+    public void afterEach(ExtensionContext context) {
     }
 
     @Override
-    public void afterAll(ExtensionContext context) throws Exception {
+    public void afterAll(ExtensionContext context) {
        log.info(testsRun.values().toString());
         //upload to TestRail, S3
 //        log.info("Tests executed were:");

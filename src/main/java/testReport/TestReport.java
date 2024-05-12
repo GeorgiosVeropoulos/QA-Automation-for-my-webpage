@@ -113,8 +113,7 @@ public class TestReport {
     }
 
     private String base64ScreenShot() {
-        String base64Screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
-        return base64Screenshot;
+        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
     }
 
 }

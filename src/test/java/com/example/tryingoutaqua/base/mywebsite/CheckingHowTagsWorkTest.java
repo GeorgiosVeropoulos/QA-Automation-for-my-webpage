@@ -4,11 +4,7 @@ import Listeners.TestInfo;
 import helpers.Sleeper;
 import org.junit.jupiter.api.Tag;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class CheckingHowTagsWorkTest extends MyWebSiteBase{
-
+public class CheckingHowTagsWorkTest extends MyWebSiteBase {
 
     @TestInfo(name = "test1", id = 1)
     @Tag("testGroup")
