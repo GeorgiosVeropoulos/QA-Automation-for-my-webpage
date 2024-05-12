@@ -113,7 +113,6 @@
                             junit.jupiter.execution.parallel.mode.default = concurrent
                         </configurationParameters>
                     </properties>
-<!--                    <testFailureIgnore>false</testFailureIgnore>-->
                     <groups>${groupToRun}</groups>
 <!--                    Forks create new JVM instances only use them under specific reasons
                         if used here they will break the reports and each Test will overwrite them-->

@@ -30,18 +30,9 @@ public class TestReport {
         this.driver = driver;
     }
 
-    /**
-     * <b>Don't call this method it is used inside the TestListener</b>
-     * @param reports the extentReport to be given.
-     * @param name the name of the Test.
-     */
-    public static void setTestName(ExtentReports reports, String name) {
-        extentTest.set(reports.createTest(name));
-    }
-
     public void logMessage(Status status, String message) {
         extentTest.get().log(status, message);
-        log.info("Status = " + status + " : " + message);
+        log.info(message);
     }
 
     public void logTestStep(String message) {
@@ -51,11 +42,10 @@ public class TestReport {
     public void assertEquals(Object expected, Object actual, String message) {
         try {
             Assertions.assertEquals(expected, actual, message);
-            logMessage(Status.PASS, "Assertion passed with message: " + message
-                    + " expected: " + expected + " == " + "actual: " + actual);
+            logMessage(Status.PASS, message + " expected: " + expected + " actual: " + actual);
         } catch (AssertionError e) {
-            logMessage(Status.FAIL, e.getMessage());
-            logScreenShot(Status.INFO);
+            logMessage(Status.FAIL, message + " expected: " + expected + " actual: " + actual);
+//            logScreenShot(Status.INFO);
             throw e;
         }
     }
@@ -63,11 +53,10 @@ public class TestReport {
     public void softAssertEquals(Object expected, Object actual, String message) {
         try {
             Assertions.assertEquals(expected, actual, message);
-            logMessage(Status.PASS, "Assertion passed with message: " + message
-                    + " expected: " + expected + " == " + "actual: " + actual);
+            logMessage(Status.PASS, message + " expected: " + expected + " actual: " + actual);
         } catch (AssertionError e) {
-            logMessage(Status.FAIL, e.getMessage());
-            logScreenShot(Status.INFO);
+            logMessage(Status.FAIL, message + " expected: " + expected + " actual: " + actual);
+//            logScreenShot(Status.INFO);
             errors.add(e);
         }
     }
@@ -77,6 +66,7 @@ public class TestReport {
         if (!errors.isEmpty()) {
             StringBuilder errorMessage = new StringBuilder("Soft assert failed:\n");
             for (AssertionError error : errors) {
+                String local = error.getLocalizedMessage();
                 errorMessage.append(error.getMessage()).append("\n");
             }
             errors.clear();

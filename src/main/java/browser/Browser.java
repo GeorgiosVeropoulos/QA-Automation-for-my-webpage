@@ -31,10 +31,9 @@ public class Browser {
     }
 
     private void initializeWebDriver() {
-//        Path path = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "env", System.getProperty("property"));
-//        Properties properties = loadProperties(path);
         setUpBrowser(selectBrowserFromProperties());
         driverThreadLocal.get().manage().window().maximize();
+        driverThreadLocal.get().manage().timeouts().pageLoadTimeout(Duration.ofMillis(DEFAULT_WAIT));
         driverThreadLocal.get().manage().timeouts().implicitlyWait(Duration.ofMillis(DEFAULT_WAIT));
     }
 
@@ -92,6 +91,8 @@ public class Browser {
         CHROME,
         FIREFOX
     }
+
+
 
 
 

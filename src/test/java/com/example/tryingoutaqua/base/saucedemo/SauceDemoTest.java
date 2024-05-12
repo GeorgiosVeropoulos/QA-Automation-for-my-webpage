@@ -16,6 +16,7 @@ public class SauceDemoTest extends MyWebSiteBase {
     public void sauceDemoTest() {
         testStep("Sauce demo testStep");
         Sleeper.sleepInSeconds(8);
+        testReport.logTestStep("empty");
 //        testCaseReport.softAssertEquals(1, 2,"is 1 equal to 2?");
 //
 //        testCaseReport.assertEquals(1, 1, "1 is equal to 1");
