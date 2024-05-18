@@ -13,8 +13,8 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-  schedule:
-    - cron: '0 0 * * *' #run everyday at 12.
+  # schedule:
+    # - cron: '0 0 * * *' #run everyday at 12.
 
 jobs:
   build:
